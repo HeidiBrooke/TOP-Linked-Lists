@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+const linkedList = (h = null) => {
+    let headNode = h;
+    let currentNode = null;
+
+    const append = (val) => {
+        const newNode = node(val);
+        if(headNode !== undefined) {
+        currentNode = headNode;
+        while(currentNode.nextNode !== null) {
+            currentNode = currentNode.nextNode;
+        }
+        currentNode.nextNode = newNode;
+        }
+        else {
+            headNode = newNode;
+        }
+    }
+
+    const prepend = (val) => {
+        currentNode = headNode;
+        const newNode = node(val);
+        headNode = newNode;
+        newNode.nextNode = currentNode;
+        return
+    }
+
+    const size = () => {
+        let size = 0;
+        if(headNode == null){
+            console.log('empty list')
+            //return
+        }
+        else{
+            currentNode = headNode;
+            while(currentNode.nextNode !== null){
+                size++;
+                currentNode = currentNode.nextNode;
+            }
+            size++;
+        }
+        console.log(size)
+    }
+
+    const head = () => {
+        console.log(headNode);
+        return headNode;
+    }
+
+    const tail = () => {
+        currentNode = headNode;
+            while(currentNode.nextNode !== null){
+                currentNode = currentNode.nextNode;
+            }
+        console.log(currentNode);
+        return currentNode;
+    }
+
+    const at = (index) => {
+        let size = 0;
+        if(headNode == null){
+            console.log('empty list')
+            //return
+        }
+        else{
+            currentNode = headNode;
+            while(currentNode.nextNode !== null){
+                if(size === index){
+                    console.log(currentNode);
+                    return currentNode;
+                }
+                else {
+                    currentNode = currentNode.nextNode;
+                    size++;
+                }    
+            }
+            if(size === index){
+                    console.log(currentNode);
+                    return currentNode;
+                }
+            else {
+                console.log('index out of range');
+            }
+        }
+    }
+
+    const pop = () => {
+        currentNode = headNode;
+        let previousNode;
+        while(currentNode.nextNode !== null){
+            previousNode = currentNode;
+            currentNode = currentNode.nextNode;
+        }
+        previousNode.nextNode = null;
+    }
+
+    const contains = (val) => {
+        currentNode = headNode;
+        while(currentNode.nextNode !== null){
+            if(val === currentNode.value){
+            console.log(true)
+            return true;
+            }
+            currentNode = currentNode.nextNode;
+        }
+        if(val === currentNode.value){
+            console.log(true)
+            return true;
+            }
+        else{
+                console.log(false)
+                return false;
+            }
+    }
+
+    const find = (val) => {
+        let index = 0;
+        currentNode = headNode;
+        while(currentNode.nextNode !== null){
+            if(val === currentNode.value){
+            console.log(index);
+            return index;
+            }
+            index++;
+            currentNode = currentNode.nextNode;
+        }
+        if(val === currentNode.value){
+            console.log(index);
+            return index;
+            }
+        console.log('not contained')
+
+    }
+
+    const printList = () => {
+        currentNode = headNode;
+        let string = '';
+        if(headNode !== undefined){
+            while(currentNode.nextNode !== null) {
+                string += `(${currentNode.value}) -> `;
+                currentNode = currentNode.nextNode;
+            }
+            string += `(${currentNode.value}) -> null`;
+        }
+        console.log(string);
+    }
+
+    const insertAt = (v, index) => {
+        let newNode = node(v);
+        let position = 0;
+        let previousNode;
+        currentNode = headNode;
+        if(index === position){
+            prepend(v);
+            return
+        }
+        while(currentNode.nextNode !== null){
+            previousNode = currentNode;
+            if (position === index){
+                previousNode.nextNode = newNode;
+                newNode.nextNode = currentNode;
+            }
+            position++;
+            currentNode = currentNode.nextNode;
+        }
+        if (position === index){
+                previousNode.nextNode = newNode;
+                newNode.nextNode = currentNode;
+                return
+            }
+        console.log('out of range')
+
+    }
+
+    const removeAt = (index) => {
+        console.log('removing')
+        let position = 0;
+        let previousNode;
+        currentNode = headNode;
+        if(index === position){
+            headNode = headNode.nextNode;
+            return
+        }
+        while(currentNode.nextNode !== null){
+            if (position === index){
+                previousNode.nextNode = currentNode.nextNode;
+                return
+            }
+            position++;
+            previousNode = currentNode;
+            currentNode = currentNode.nextNode;
+        }
+        if (position === index){
+                previousNode.nextNode = null;
+                return
+            }
+        console.log('out of range')
+
+    }
+
+    
+    
+
+    return {headNode, append, prepend, size, head, tail, at, pop, contains, find, printList, insertAt, removeAt
+    }
+}
+
+
+const node = (val = null) => {
+    let value = val;
+    let nextNode = null;
+
+    return{value, nextNode};
+}
+
+//////
+const firstNode = node('a');
+const secondNode = node('b');
+
+
+firstNode.nextNode = secondNode;
+console.log(firstNode.nextNode);
+
+const aLinkedList = linkedList(firstNode);
+console.log(aLinkedList.headNode);
+
+aLinkedList.append('c');
+aLinkedList.prepend('-a')
+aLinkedList.printList();
+aLinkedList.size();
+aLinkedList.head();
+aLinkedList.tail();
+aLinkedList.at(2);
+aLinkedList.pop();
+aLinkedList.printList();
+aLinkedList.contains('b');
+aLinkedList.contains('c');
+aLinkedList.find('-a');
+aLinkedList.insertAt('z', 2);
+aLinkedList.printList();
+aLinkedList.insertAt('-z', 0);
+aLinkedList.printList();
+aLinkedList.removeAt(0);
+aLinkedList.removeAt(2);
+aLinkedList.printList();
+
+
+
+
+    </script>
+</body>
+</html>
